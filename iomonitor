@@ -188,7 +188,7 @@ for i in $(echo "${data_lines}"); do
 	esac
 
 	debug_write "(${unit}) - ${value} * ${conversion}"
-	converted=$(echo "scale=6; ${value} * ${conversion}" | bc | awk '{printf "%f", $0}')
+        converted=$(echo "x=${value} * ${conversion};if(x<1) print 0; x" | bc)
 
 	data[${count}]=${converted}
 	count=$((${count}+1))
