@@ -92,9 +92,15 @@ setargs(){
 				shift
         			directory="$1"
         		;;
+
+                        "-w" | "--write" )
+                                write="-WWW"
+                        ;;
+
 			"--nagios-perfdata")
 				perfdata=1
 			;;	
+
 			"-v" | "--verbose")
 				#shift
 				dbg=1
@@ -134,9 +140,14 @@ fi
 # Stuff
 debug_write "Current directory - $(pwd)"
 
+# --write
+if [ ${write} ]; then
+        debug_write "Writing to ${directory}/ioping.tmp"
+fi
+
 # Run ioping
 debug_write "Running ${count} times"
-cmd=$(ioping -c ${count} .)
+cmd=$(ioping -c ${count} ${write} .)
 
 # --verbose
 debug_write "output: ${cmd}"
