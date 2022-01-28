@@ -156,30 +156,28 @@ SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
 count=0
 for i in $(echo "${data_lines}"); do
-	# TODO: Make what to convert to an argument
-	# we default now to seconds. People may want to monitor at ms level
-	#... but I suck at math
+	# default to milliseconds
 
 	value=$(echo "$i" | cut -d ' ' -f1)
 	unit=$(echo "$i" | cut -d ' ' -f2)
 	case "${unit}" in
 		ns)
-			conversion="0.000000001"
-		;;
-		us)
 			conversion="0.000001"
 		;;
-		ms)
+		us)
 			conversion="0.001"
 		;;
-		s)	
+		ms)
 			conversion="1"
 		;;
+		s)	
+			conversion="1000"
+		;;
 		m)
-			conversion="60"
+			conversion="60000"
 		;;
 		h)
-			conversion="3600"
+			conversion="3600000"
 		;;
 		*)
 			echo "* ERROR: Received unit we could not convert. Got ${unit}"
