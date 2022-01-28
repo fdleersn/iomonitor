@@ -145,9 +145,9 @@ if [ ${write} ]; then
         debug_write "Writing to ${directory}/ioping.tmp"
 fi
 
-# Run ioping
+# Run ioping using direct I/O (-D)
 debug_write "Running ${count} times"
-cmd=$(ioping -c ${count} ${write} .)
+cmd=$(ioping -D -c ${count} ${write} .)
 
 # --verbose
 debug_write "output: ${cmd}"
